@@ -1,3 +1,3 @@
 # Lairavel
-php framework practicing by imitating laravel
+php framework implementing by imitating laravel
 
