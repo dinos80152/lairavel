@@ -1,5 +1,9 @@
 <?php
-require 'TopicData.php';
+require '../src/App/TopicData.php';
+require '../src/App/Template.php';
+
+use App\TopicData;
+use App\Template;
 
 if (isset($_POST['id']) && !empty($_POST['id'])) {
     $data = new TopicData();
@@ -25,21 +29,5 @@ if ($topic === false) {
     exit;
 }
 
-$data = new TopicData();
-$topic = $data->getTopic($_GET['id']);
-?>
-<h2>Edit Topic</h2>
-<form action="edit.php" method="POST">
-    <label>
-        Title: <input type="text" name="title" value="<?php $topic['title']; ?>">
-    </label>
-    <br>
-    <label>
-        Description:
-        <br>
-        <textarea name="description" cols="50" rows="20"><?php $topic['description']; ?></textarea>
-    </label>
-    <br>
-    <input type="hidden" name="id" value="<?=$topic['id'];?>">
-    <input type="submit" value="Edit Topic">
-</form>
+$template = new Template("../views/base.phtml");
+$template->render("../views/index/edit.phtml", ['topic' => $topic]);
