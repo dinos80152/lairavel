@@ -6,22 +6,23 @@ use PDO;
 
 class TopicData
 {
-
     protected $connection;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->connect();
-
     }
 
     public function connect()
     {
-        $this->connection = new PDO("mysql:host=localhost;dbname=suggestotron", "root", "root");
+        $config = \App\Config::get('database');
+
+        $this->connection = new PDO('mysql:host='.$config['hostname'].';dbname='.$config['dbname'], $config['username'], $config['password']);
     }
 
     public function getAllTopics()
     {
-        $query = $this->connection->prepare("SELECT * FROM topics");
+        $query = $this->connection->prepare('SELECT * FROM topics');
         $query->execute();
 
         return $query;
@@ -29,7 +30,7 @@ class TopicData
 
     public function getTopic($id)
     {
-        $sql = "SELECT * FROM topics WHERE id = :id LIMIT 1";
+        $sql = 'SELECT * FROM topics WHERE id = :id LIMIT 1';
         $query = $this->connection->prepare($sql);
 
         $values = [':id' => $id];
@@ -41,18 +42,18 @@ class TopicData
     public function add($data)
     {
         $query = $this->connection->prepare(
-            "INSERT INTO topics (
+            'INSERT INTO topics (
                 title,
                 description
             ) VALUES (
                 :title,
                 :description
-            )"
+            )'
         );
 
         $data = [
             ':title' => $data['title'],
-            ':description' => $data['description']
+            ':description' => $data['description'],
         ];
 
         $query->execute($data);
@@ -61,28 +62,29 @@ class TopicData
     public function update($data)
     {
         $query = $this->connection->prepare(
-            "UPDATE topics
+            'UPDATE topics
                 SET
                     title = :title,
                     description = :description
                 WHERE
-                    id = :id"
+                    id = :id'
         );
 
         $data = [
             ':id' => $data['id'],
             ':title' => $data['title'],
-            ':description' => $data['description']
+            ':description' => $data['description'],
         ];
 
         return $query->execute($data);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $query = $this->connection->prepare(
-            "DELETE FROM topics
+            'DELETE FROM topics
                 WHERE
-                    id = :id"
+                    id = :id'
         );
 
         $data = [
