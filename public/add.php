@@ -1,6 +1,6 @@
 <?php
 
-require '../src/Suggestotron/Autoloader.php';
+require '../src/App/Autoloader.php';
 
 if (isset($_POST) && sizeof($_POST) > 0) {
     $data = new \App\TopicData();

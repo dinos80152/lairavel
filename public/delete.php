@@ -1,6 +1,6 @@
 <?php
 
-require '../src/Suggestotron/Autoloader.php';
+require '../src/App/Autoloader.php';
 
 use App\TopicData;
 
