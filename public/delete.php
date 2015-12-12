@@ -1,10 +1,11 @@
 <?php
-require_once '../src/App/TopicData.php';
+
+require '../src/Suggestotron/Autoloader.php';
 
 use App\TopicData;
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    echo "You did not pass in an ID.";
+    echo 'You did not pass in an ID.';
     exit;
 }
 
@@ -12,13 +13,13 @@ $data = new TopicData();
 $topic = $data->getTopic($_GET['id']);
 
 if ($topic === false) {
-    echo "Topic not found!";
+    echo 'Topic not found!';
     exit;
 }
 
 if ($data->delete($_GET['id'])) {
-    header("Location: /index.php");
+    header('Location: /index.php');
     exit;
 } else {
-    echo "An error occurred";
+    echo 'An error occurred';
 }

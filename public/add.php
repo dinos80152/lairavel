@@ -1,13 +1,13 @@
 <?php
-require '../src/App/TopicData.php';
-require '../src/App/Template.php';
+
+require '../src/Suggestotron/Autoloader.php';
 
 if (isset($_POST) && sizeof($_POST) > 0) {
     $data = new \App\TopicData();
     $data->add($_POST);
-    header("Location: /");
+    header('Location: /');
     exit;
 }
 
-$template = new \App\Template("../views/base.phtml");
-$template->render("../views/index/add.phtml");
+$template = new \App\Template('../views/base.phtml');
+$template->render('../views/index/add.phtml');
