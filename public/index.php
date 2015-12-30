@@ -6,9 +6,11 @@ require_once '../src/App/Config.php';
 $config = \App\Config::get('autoload');
 require_once $config['class_path'].'/App/Autoloader.php';
 
-$data = new \App\TopicData();
+if (!isset($_SERVER['PATH_INFO']) || empty($_SERVER['PATH_INFO']) || $_SERVER['PATH_INFO'] == '/') {
+    $route = 'list';
+} else {
+    $route = $_SERVER['PATH_INFO'];
+}
 
-$topics = $data->getAllTopics();
-
-$template = new \App\Template('../views/base.phtml');
-$template->render('../views/index/index.phtml', ['topics' => $topics]);
+$router = new \App\Router();
+$router->start($route);
